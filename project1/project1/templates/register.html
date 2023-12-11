@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+        <style>
+            body
+            {
+                margin: 0;
+                padding: 0;
+                background-color:#6abadeba;
+                font-family: 'Arial';
+            }
+            h2{
+                text-align: center;
+                color: #277582;
+                padding: 20px;
+            }
+            label{
+                color: #024c3e;
+                font-size: 17px;
+            }
+            username{
+                width: 300px;
+                height: 30px;
+                border: none;
+                border-radius: 3px;
+                padding-left: 8px;
+            }
+            first_name{
+                width: 300px;
+                height: 30px;
+                border: none;
+                border-radius: 3px;
+                padding-left: 8px;
+            }
+            last_name{
+                width: 300px;
+                height: 30px;
+                border: none;
+                border-radius: 3px;
+                padding-left: 8px;
+            }
+            email{
+                width: 300px;
+                height: 30px;
+                border: none;
+                border-radius: 3px;
+                padding-left: 8px;
+            }
+            password{
+                width: 300px;
+                height: 30px;
+                border: none;
+                border-radius: 3px;
+                padding-left: 8px;
+            }cpassword{
+                width: 300px;
+                height: 30px;
+                border: none;
+                border-radius: 3px;
+                padding-left: 8px;
+            }
+        </style>
+</head>
+<body>
+<h2>CREATE ACCOUNT</h2>
+<form action="register" method="post" style="text-align:center">
+{% csrf_token %}
+    <label>Username :</label>
+    <input type="text" name="username" placeholder="Enter your Username"><br>
+    <label>First Name :</label>
+    <input type="text" name="first_name" placeholder="Enter your First Name"><br>
+    <label>Last Name :</label>
+    <input type="text" name="last_name" placeholder="Enter your Last Name"><br>
+    <label>Email :</label>
+    <input type="email" name="email" placeholder="Enter your Email"><br>
+    <label>Password :</label>
+    <input type="password" name="password" placeholder="Enter your password"><br>
+    <label>Confirm Password :</label>
+    <input type="password" name="cpassword" placeholder="Confirm your password"><br>
+    <br>
+    <input type="submit" style="color:green">
+</form>
+{% for msg in messages %}
+<h3>{{msg}}</h3>
+{% endfor %}
+</body>
+</html>
