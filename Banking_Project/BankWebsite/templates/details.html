@@ -1,0 +1,235 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Details</title>
+    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 250vh;
+        }
+
+        form {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        h3 {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-align:center;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .checkbox-group {
+            text-align: center;
+            display: inline-block;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .checkbox-group input {
+            margin-right: 8px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+  </head>
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+
+
+
+  <form method="POST" action="details" onsubmit="return showSuccessMessage()">
+    {% csrf_token %}
+
+    <h3>Details Form</h3>
+
+    <label>Name:</label>
+    <input type="text" name="name" required><br>
+
+    <label>DOB:</label>
+    <input type="date" name="dob" required><br>
+
+    <label>Age:</label>
+    <input type="number" name="age" required><br>
+
+    <label>Gender:</label>
+    <select name="gender" required>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select><br>
+
+    <label>Phone Number:</label>
+    <input type="tel" name="phone_number" required><br>
+
+    <label>Email ID:</label>
+    <input type="email" name="email" required><br>
+
+    <label>Address:</label>
+    <textarea name="address" required></textarea><br>
+
+    <label for="district">District:</label>
+    <select id="district" onchange="populateBranches()">
+        <option value="">-- select one -- </option>
+        <option value="Thrissur">Thrissur</option>
+        <option value="Alappuzha">Alappuzha</option>
+        <option value="Ernakulam">Ernakulam</option>
+        <option value="Kozhikode">Kozhikode</option>
+        <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+    </select>
+
+    <label for="branch">Branch:</label>
+    <select id="branch">
+      <!-- Branch options will be populated dynamically using JavaScript -->
+    </select>
+
+    <label>Account Type:</label>
+    <select name="account_type" required>
+      <option value="savings">Savings Account</option>
+      <option value="current">Current Account</option>
+    </select><br>
+
+    <label>Materials Needed:</label>
+    <div class="checkbox-group">
+        <label for="debitCard">Debit Card</label>
+        <input type="checkbox" id="debitCard" name="materials_provide" value="debit_card">
+
+        <label for="creditCard">Credit Card</label>
+        <input type="checkbox" id="creditCard" name="materials_provide" value="credit_card">
+
+        <label for="chequeBook">Cheque Book</label>
+        <input type="checkbox" id="chequeBook" name="materials_provide" value="cheque_book">
+    </div>
+
+    <input type="submit" value="Submit">
+
+    <form method="POST" action='login'>
+      {% csrf_token %}
+      <input type="submit" value="Logout">
+    </form>
+
+    <script>
+      function populateBranches() {
+          var districtSelect = document.getElementById("district");
+          var branchSelect = document.getElementById("branch");
+
+          // Clear existing options in branch dropdown
+          branchSelect.innerHTML = "";
+
+          if (districtSelect.value === "Thrissur") {
+              var branches = ["Irinjalakuda", "Chalakudy", "Guruvayur"];
+              for (var i = 0; i < branches.length; i++) {
+                  var option = document.createElement("option");
+                  option.text = branches[i];
+                  option.value = branches[i].toLowerCase().replace(/\s+/g, "_");
+                  branchSelect.add(option);
+              }
+          } else if (districtSelect.value === "Alappuzha") {
+              var branches = ["Kayamkulam", "Cherthala", "Mavelikkara"];
+              for (var i = 0; i < branches.length; i++) {
+                  var option = document.createElement("option");
+                  option.text = branches[i];
+                  option.value = branches[i].toLowerCase().replace(/\s+/g, "_");
+                  branchSelect.add(option);
+              }
+          } else if (districtSelect.value === "Ernakulam") {
+              var branches = ["Kochi", "Kalamassery", "Angamaly"];
+              for (var i = 0; i < branches.length; i++) {
+                  var option = document.createElement("option");
+                  option.text = branches[i];
+                  option.value = branches[i].toLowerCase().replace(/\s+/g, "_");
+                  branchSelect.add(option);
+              }
+          } else if (districtSelect.value === "Kozhikode") {
+              var branches = ["Koyilandy", "Payyoli", "Koduvally"];
+              for (var i = 0; i < branches.length; i++) {
+                  var option = document.createElement("option");
+                  option.text = branches[i];
+                  option.value = branches[i].toLowerCase().replace(/\s+/g, "_");
+                  branchSelect.add(option);
+              }
+          } else if (districtSelect.value === "Thiruvananthapuram") {
+              var branches = ["Varkala", "Attingal", "Neyyattinkara"];
+              for (var i = 0; i < branches.length; i++) {
+                  var option = document.createElement("option");
+                  option.text = branches[i];
+                  option.value = branches[i].toLowerCase().replace(/\s+/g, "_");
+                  branchSelect.add(option);
+              }
+          }
+      }
+    </script>
+
+    <script>
+    function showSuccessMessage() {
+      alert('Entered Details Successfully. Please Log In');
+      window.location.href = "{% url 'login' %}";
+      return false;  // Prevents the form from submitting normally
+      }
+    </script>
+  </form>
+
+
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'js/jquery-ui.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'js/aos.js' %}"></script>
+  <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+  <script src="{% static 'js/jquery.sticky.js' %}"></script>
+  <script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>
